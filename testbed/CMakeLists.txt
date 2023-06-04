@@ -1,5 +1,5 @@
 project(
-    WignerTestbed
+    WignerTest
     VERSION 0.1
     DESCRIPTION "Wigner Engine Testbed"
     LANGUAGES CXX

@@ -2,23 +2,29 @@ project(
     Wigner
     VERSION 0.1
     DESCRIPTION "Wigner Engine"
-    LANGUAGES CXX
+    LANGUAGES C CXX
 )
 
-##############################################
 ################### VENDOR ###################
-##############################################
 
 option(GLFW_BUILD_DOCS OFF)
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
 add_subdirectory(vendor/glfw)
 
+set(
+    VENDOR_INCLUDE_DIRS
+    ${PROJECT_SOURCE_DIR}/vendor/glad/include
+    ${PROJECT_SOURCE_DIR}/vendor/glfw/include
+    ${PROJECT_SOURCE_DIR}/vendor/glm
+)
 
+set(
+    VENDOR_SOURCES
+    ${PROJECT_SOURCE_DIR}/vendor/glad/src/glad.c
+)
 
-##############################################
 ################### LIBRARY ##################
-##############################################
 
 set(
     LOCAL_HEADERS
@@ -30,27 +36,25 @@ set(
 set(
     LOCAL_SOURCES
 
-    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Entrypoint.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Application.cpp
 )
 
 add_library(
     ${PROJECT_NAME} STATIC
     ${LOCAL_SOURCES}
+    ${VENDOR_SOURCES}
     ${LOCAL_HEADERS}
 )
 
 target_include_directories(
     ${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}/source
-    ${PROJECT_SOURCE_DIR}/vendor/glfw/include
-    ${PROJECT_SOURCE_DIR}/vendor/glm
+    ${VENDOR_INCLUDE_DIRS}
 )
 
 target_link_libraries(
     ${PROJECT_NAME} PUBLIC
-    # glfw ${GLFW_LIBRARIES}
-    # glad
+    glfw ${GLFW_LIBRARIES}
 )
 
 target_compile_features(
