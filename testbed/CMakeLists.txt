@@ -17,8 +17,8 @@ set(
 
 add_executable(
     ${PROJECT_NAME}
-    ${SOURCE_LIST}
-    ${HEADER_LIST}
+    ${LOCAL_SOURCES}
+    ${LOCAL_HEADERS}
 )
 
 target_compile_features(
