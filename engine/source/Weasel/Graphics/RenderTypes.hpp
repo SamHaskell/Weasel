@@ -3,9 +3,6 @@
 #include "Weasel/Base/Base.hpp"
 
 #include "glad/glad.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-#include "glm/gtc/quaternion.hpp"
 
 #include <vector>
 #include <array>
@@ -14,8 +11,8 @@
 using Index = u32;
 
 struct Vertex {
-    glm::vec3 Position;
-    glm::vec3 Normal;
-    glm::vec3 Albedo;
-    glm::vec2 TexCoord;
+    glm::vec3 Position = {0.0f, 0.0f, 0.0f};
+    glm::vec3 Normal = {0.0f, 0.0f, 0.0f};
+    glm::vec3 Color = {1.0f, 1.0f, 1.0f};
+    glm::vec2 TexCoord = {0.0f, 0.0f};
 };

@@ -27,6 +27,7 @@ namespace Weasel
         LOG_INFO("Platform Detected: MacOS, enabling OpenGL forward compat");
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
+
         m_WindowHandle = glfwCreateWindow(spec.Width, spec.Height, spec.Title, NULL, NULL);
 
         m_WindowState.Title = spec.Title;
@@ -38,8 +39,6 @@ namespace Weasel
 
         glfwMakeContextCurrent(m_WindowHandle);
         gladLoadGL();
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.1, 0.1, 0.1, 1.0);
 
         IMGUI_CHECKVERSION();
@@ -78,14 +77,5 @@ namespace Weasel
         glfwSwapBuffers(m_WindowHandle);
         glfwPollEvents();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-
-        ImGui::NewFrame();
-        ImGui::Button("Hello!", {100, 100});
-        ImGui::Render();
-
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 }

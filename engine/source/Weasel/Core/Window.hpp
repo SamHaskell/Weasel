@@ -38,6 +38,7 @@ namespace Weasel
         void Update();
         inline void SetEventCallback(const std::function<bool(Event&)>& callback) { m_WindowState.EventCallback = callback; };
         inline void SetClearColor(f64 r, f64 g, f64 b, f64 a) { glClearColor(r, g, b, a); }
+        inline f32 GetAspectRatio() { return (f32)m_WindowState.Width/(f32)m_WindowState.Height; }
     private:
         WindowState m_WindowState;
         GLFWwindow* m_WindowHandle;

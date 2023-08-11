@@ -10,10 +10,12 @@ namespace Weasel {
             ~Shader();
             Shader(const Shader&) = delete;
             Shader &operator=(const Shader&) = delete;
-            inline void Bind() { glUseProgram(m_ShaderProgram); }
+            inline void Bind() { glUseProgram(m_ShaderID); }
+
+            void SetUniformVec3(const char* name, const glm::vec3& vector);
+            void SetUniformMat4(const char* name, const glm::mat4& matrix);
         private:
-            void Compile();
-            u32 m_ShaderProgram;
+            u32 m_ShaderID;
     };
 
     class ShaderRepository {

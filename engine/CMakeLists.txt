@@ -51,10 +51,9 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Entrypoint.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Application.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Window.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/GameObject.hpp
 
-    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/GameObject.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/MeshInstance.hpp
-    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/Transform.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/VirtualCamera.hpp
     
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Events/Events.hpp
@@ -62,7 +61,8 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/RenderTypes.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/RenderUtils.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Buffers.hpp
-    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Camera.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Cameras.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Lights.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Renderer.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Model.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Material.hpp
@@ -80,7 +80,8 @@ set(
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/RenderUtils.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Buffers.cpp
-    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Camera.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Cameras.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Lights.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Renderer.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Model.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Material.cpp

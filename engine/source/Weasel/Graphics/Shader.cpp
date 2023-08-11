@@ -6,12 +6,61 @@ namespace Weasel {
     }
 
     Shader::Shader(const std::string& vertPath, const std::string& fragPath) {
+        u32 vertShader, fragShader;
+        i32 success;
 
+        std::string vertCode = load_shader_source(vertPath);
+        const char* vertCodeStr = vertCode.c_str();
+        vertShader = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertShader, 1, &vertCodeStr, NULL);
+        glCompileShader(vertShader);
+        glGetShaderiv(vertShader, GL_COMPILE_STATUS, &success);
+        if (success == GL_FALSE) {
+            char infoLog[512];
+            glGetShaderInfoLog(vertShader, 512, NULL, infoLog);
+            LOG_ERROR("Shader Compilation Error: %s", infoLog);
+        }
+
+        std::string fragCode = load_shader_source(fragPath);
+        const char* fragCodeStr = fragCode.c_str();
+        fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragShader, 1, &fragCodeStr, NULL);
+        glCompileShader(fragShader);
+        glGetShaderiv(fragShader, GL_COMPILE_STATUS, &success);
+        if (success == GL_FALSE) {
+            char infoLog[512];
+            glGetShaderInfoLog(fragShader, 512, NULL, infoLog);
+            LOG_ERROR("Shader Compilation Error: %s", infoLog);
+        }
+
+        m_ShaderID = glCreateProgram();
+        glAttachShader(m_ShaderID, vertShader);
+        glAttachShader(m_ShaderID, fragShader);
+        glLinkProgram(m_ShaderID);
+        glGetProgramiv(m_ShaderID, GL_LINK_STATUS, &success);
+        if(!success)
+        {
+            char infoLog[512];
+            glGetProgramInfoLog(m_ShaderID, 512, NULL, infoLog);
+            LOG_ERROR("Shader Linking Error: %s", infoLog);
+        }
+
+        glDeleteShader(vertShader);
+        glDeleteShader(fragShader);
     }
 
     Shader::~Shader() {
 
     }
+
+    void Shader::SetUniformVec3(const char* name, const glm::vec3& vector) {
+        glUniform3fv(glGetUniformLocation(m_ShaderID, name), 1, &vector[0]);
+    }
+    
+    void Shader::SetUniformMat4(const char* name, const glm::mat4& matrix) {
+        glUniformMatrix4fv(glGetUniformLocation(m_ShaderID, name), 1, GL_FALSE, &matrix[0][0]);
+    }
+
 
     std::shared_ptr<ShaderRepository> ShaderRepository::Create() {
         return std::make_shared<ShaderRepository>();
