@@ -3,6 +3,7 @@
 #include "Weasel/Base/Base.hpp"
 #include "Weasel/Events/Events.hpp"
 #include "Weasel/Core/Window.hpp"
+#include "Weasel/Graphics/Renderer.hpp"
 
 namespace Weasel
 {
@@ -16,7 +17,8 @@ namespace Weasel
 
     private:
         bool m_Running;
-        Window* m_Window;
+        std::unique_ptr<Window> m_Window;
+        std::unique_ptr<Renderer> m_Renderer;
     };
 
     Application *CreateApplication();

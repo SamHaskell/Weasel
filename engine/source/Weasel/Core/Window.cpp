@@ -2,9 +2,9 @@
 
 namespace Weasel
 {
-    Window *Window::Create(const WindowSpec &spec)
+    std::unique_ptr<Window> Window::Create(const WindowSpec &spec)
     {
-        return new Window(spec);
+        return std::make_unique<Window>(spec);
     }
 
     Window::Window(const WindowSpec &spec)
