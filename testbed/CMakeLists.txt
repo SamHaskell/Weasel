@@ -1,7 +1,7 @@
 project(
-    WignerTest
+    WeaselTest
     VERSION 0.1
-    DESCRIPTION "Wigner Engine Testbed"
+    DESCRIPTION "Weasel Engine Testbed"
     LANGUAGES CXX
 )
 
@@ -28,5 +28,5 @@ target_compile_features(
 
 target_link_libraries(
     ${PROJECT_NAME} PRIVATE
-    Wigner
+    Weasel
 )

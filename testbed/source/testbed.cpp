@@ -1,17 +1,17 @@
 // #include <Wigner.hpp>
 
-#include "Wigner/Core/Application.hpp"
-#include "Wigner/Core/Entrypoint.hpp"
+#include "Weasel/Core/Application.hpp"
+#include "Weasel/Core/Entrypoint.hpp"
 
 #include <iostream>
 
-class Testbed : public Wigner::Application {
+class Testbed : public Weasel::Application {
     public:
         Testbed() {}
         ~Testbed() {}
     private:
 };
 
-Wigner::Application *Wigner::CreateApplication() {
+Weasel::Application *Weasel::CreateApplication() {
     return new Testbed();
 }
