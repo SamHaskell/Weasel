@@ -3,6 +3,8 @@
 #include "glad/glad.h"
 #include <iostream>
 
+#include "Weasel/Core/GameObject.hpp"
+
 #include "Weasel/Graphics/RenderTypes.hpp"
 #include "Weasel/Graphics/Shader.hpp"
 #include "Weasel/Graphics/Model.hpp"
@@ -149,9 +151,33 @@ namespace Weasel
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
 
+        GameObject go;
+        SomeData* something = go.AddComponent<SomeData>();
+        SomeOtherData* somethingElse = go.AddComponent<SomeOtherData>();
+        LOG_INFO("%i", something->GetFive());
+        LOG_INFO("%i", somethingElse->GetSix());
+
+        SomeData* pointer = go.GetComponent<SomeData>();
+        LOG_INFO("%i", something->GetFive());
+
+        go.DestroyComponent(pointer);
+        if (pointer == nullptr) {
+            LOG_DEBUG("Component doesn't exist anymore!");
+        }
+
+        SomeData* maybe;
+        if (go.TryGetComponent<SomeData>(&maybe)) {
+            LOG_DEBUG("Wahey");
+        } else {
+            LOG_DEBUG("Boo");
+        }
+
+
+
         m_Running = true;
         while (m_Running)
         {            
+
             m_Window->Update();
 
             litShader->Bind();
