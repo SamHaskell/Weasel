@@ -4,5 +4,7 @@
 #include "Weasel/Base/Base.hpp"
 
 namespace Weasel {
-    
+    class MeshInstance : public Component {
+
+    };
 }

@@ -13,7 +13,7 @@ namespace Weasel {
     class Component {
         public:
             Component(GameObject* owner) { m_Owner = owner; }
-            virtual ~Component() {}
+            virtual ~Component() { }
         protected:
             GameObject* m_Owner;
     };
@@ -21,7 +21,7 @@ namespace Weasel {
     class SomeData : public Component {
         public:
             SomeData(GameObject* owner) : Component(owner) {}
-            ~SomeData() {}
+            ~SomeData() { LOG_DEBUG("SomeData destroyed!"); }
             inline int GetFive() { return 5; }
         private:
     };
@@ -29,7 +29,7 @@ namespace Weasel {
     class SomeOtherData : public Component {
         public:
             SomeOtherData(GameObject* owner) : Component(owner) {}
-            ~SomeOtherData() {}
+            ~SomeOtherData() { LOG_DEBUG("SomeOtherData destroyed!"); }
             inline int GetSix() { return 6; }
         private:
     };
