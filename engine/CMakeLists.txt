@@ -12,10 +12,16 @@ option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
 add_subdirectory(vendor/glfw)
 
+option(ASSIMP_BUILD_ASSIMP_TOOLS OFF)
+option(ASSIMP_BUILD_SAMPLES OFF)
+option(ASSIMP_BUILD_TESTS OFF)
+add_subdirectory(vendor/assimp)
+
 set(
     VENDOR_INCLUDE_DIRS
     ${PROJECT_SOURCE_DIR}/vendor/glad/include
     ${PROJECT_SOURCE_DIR}/vendor/glfw/include
+    ${PROJECT_SOURCE_DIR}/vendor/assimp/include
     ${PROJECT_SOURCE_DIR}/vendor/glm
     ${PROJECT_SOURCE_DIR}/vendor/imgui
     ${PROJECT_SOURCE_DIR}/vendor/imgui/backends
@@ -53,6 +59,7 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Window.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/GameObject.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Scene.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Model.hpp
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/MeshInstance.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/VirtualCamera.hpp
@@ -78,6 +85,7 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Window.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/GameObject.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Scene.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Model.cpp
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/MeshInstance.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/VirtualCamera.cpp
@@ -112,6 +120,7 @@ target_include_directories(
 target_link_libraries(
     ${PROJECT_NAME} PUBLIC
     glfw ${GLFW_LIBRARIES}
+    assimp
 )
 
 target_compile_features(

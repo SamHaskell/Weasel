@@ -2,7 +2,7 @@
 
 namespace Weasel
 {
-    std::shared_ptr<Mesh> Mesh::Create(std::vector<Vertex> vertices, std::vector<Index> indices)
+    std::shared_ptr<Mesh> Mesh::Create(const std::vector<Vertex>& vertices, const std::vector<Index>& indices)
     {
         return std::make_shared<Mesh>(vertices, indices);
     }

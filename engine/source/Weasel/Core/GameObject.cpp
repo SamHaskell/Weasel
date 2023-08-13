@@ -11,4 +11,21 @@ namespace Weasel {
     GameObject::~GameObject() {
 
     }
+
+    void GameObject::Update(f64 dt) {
+        for (auto& c : m_Components) {
+            c->Update(dt);
+        }
+    }
+
+    void GameObject::OnEvent(Event& e) {
+        switch (e.Tag) {
+            case EventTag::WindowSizeEvent:
+                // check to see if component implements a window size event
+                break;
+            default:
+                break;
+        }
+        return;
+    }
 }

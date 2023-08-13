@@ -72,7 +72,7 @@ namespace Weasel
         glfwTerminate();
     }
 
-    void Window::Update()
+    void Window::Update(f64 dt)
     {
         glfwSwapBuffers(m_WindowHandle);
         glfwPollEvents();

@@ -4,7 +4,9 @@
 #include <iostream>
 
 #include "Weasel/Core/GameObject.hpp"
+#include "Weasel/Core/Model.hpp"
 #include "Weasel/Components/MeshInstance.hpp"
+#include "Weasel/Components/VirtualCamera.hpp"
 
 #include "Weasel/Graphics/RenderTypes.hpp"
 #include "Weasel/Graphics/Shader.hpp"
@@ -28,6 +30,8 @@ namespace Weasel
         m_Window->SetClearColor(0.2, 0.2, 0.2, 1.0);
 
         m_Renderer = Renderer::Create();
+
+        m_ActiveScene = Scene::Create();
 
         // Manually stand up resources here while we develop the renderer ...
 
@@ -95,13 +99,21 @@ namespace Weasel
             "../../testbed/assets/builtin/shaders/default_light.frag"
         );
 
+        auto editorCamera = m_ActiveScene->InstantiateGameObject();
+        auto editorVCamera = editorCamera->AddComponent<VirtualCamera>();
+        editorVCamera->FOV = 60.0f;
+        editorVCamera->AspectRatio = m_Window->GetAspectRatio();
+        editorVCamera->NearClip = 0.1f;
+        editorVCamera->FarClip = 1000.0f;
+        editorVCamera->MakeActive();
+
         Camera mainCamera;
-        glm::vec3 mainCameraPosition = glm::vec3(2.0f, 2.0f, 2.0f);
+        glm::vec3 mainCameraPosition = glm::vec3(6.0f, 6.0f, 6.0f);
         mainCamera.SetPerspectiveProjection(60.0f, m_Window->GetAspectRatio(), 0.1f, 1000.0f);
         mainCamera.SetViewTarget(mainCameraPosition, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
         DirectionalLight mainLight;
-        glm::vec3 mainLightPosition = glm::vec3(-4.0f, 3.0f, -2.0f);
+        glm::vec3 mainLightPosition = glm::vec3(-2.0f, 3.0f, 3.0f);
         mainLight.Color = glm::vec3(1.0f, 1.0f, 1.0f);
 
         glCullFace(GL_BACK);
@@ -116,10 +128,16 @@ namespace Weasel
         mesh->SetMesh(cubeMesh);
         mesh->SetMaterial(cubeMaterial);
 
+        auto model = Model::Load("../../testbed/assets/user/models/backpack/backpack.obj");
+
         m_Running = true;
+        f64 dt = 0.0;
+        f64 elapsed = 0.0;
+        auto now = std::chrono::high_resolution_clock::now();
         while (m_Running)
         {            
-            m_Window->Update();
+            m_Window->Update(dt);
+            m_ActiveScene->Update(dt);
 
             litShader->Bind();
             litShader->SetUniformMat4("u_ModelToWorldSpace", glm::mat4(1.0f));
@@ -128,7 +146,10 @@ namespace Weasel
             litShader->SetUniformVec3("u_LightPosition", mainLightPosition);
             litShader->SetUniformVec3("u_CameraPosition", mainCameraPosition);
 
-            cubeMesh->Draw();
+            // cubeMesh->Draw();
+            for (auto mesh : model->m_Meshes) {
+                m_Renderer->DrawMesh(mesh, cubeMaterial);
+            }
 
             lightShader->Bind();
             lightShader->SetUniformMat4("u_ModelToWorldSpace", glm::scale(glm::translate(glm::mat4(1.0f), mainLightPosition), glm::vec3(0.2f, 0.2f, 0.2f)));
@@ -145,21 +166,25 @@ namespace Weasel
             ImGui::Render();
 
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+            auto next = std::chrono::high_resolution_clock::now();
+            dt = std::chrono::duration<f64, std::chrono::seconds::period>(next - now).count();
+            elapsed += dt;
+            now = next;
         }
         return true;
     }
 
     bool Application::OnEvent(Event &e)
     {
-        switch (e.Tag)
-        {
-        case EventTag::WindowCloseEvent:
-            m_Running = false;
-            break;
-        default:
-            break;
+        switch (e.Tag) {
+            case EventTag::WindowCloseEvent:
+                m_Running = false;
+                break;
+            default:
+                break;
         }
-
+        m_ActiveScene->OnEvent(e);
         return true;
     }
 }

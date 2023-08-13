@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Weasel/Base/Base.hpp"
+#include "Weasel/Events/Events.hpp"
 
 #include <stack>
 
@@ -9,29 +10,15 @@ namespace Weasel {
     #define MAX_COMPONENTS_PER_ENTITY 64
 
     class GameObject;
+    class Scene;
 
     class Component {
         public:
             Component(GameObject* owner) { m_Owner = owner; }
-            virtual ~Component() { }
+            virtual ~Component() {}
+            virtual void Update(f64 dt) {}
         protected:
             GameObject* m_Owner;
-    };
-
-    class SomeData : public Component {
-        public:
-            SomeData(GameObject* owner) : Component(owner) {}
-            ~SomeData() { LOG_DEBUG("SomeData destroyed!"); }
-            inline int GetFive() { return 5; }
-        private:
-    };
-
-    class SomeOtherData : public Component {
-        public:
-            SomeOtherData(GameObject* owner) : Component(owner) {}
-            ~SomeOtherData() { LOG_DEBUG("SomeOtherData destroyed!"); }
-            inline int GetSix() { return 6; }
-        private:
     };
 
     class Transform {
@@ -50,6 +37,8 @@ namespace Weasel {
         public:
             GameObject();
             ~GameObject();
+            void Update(f64 dt);
+            void OnEvent(Event& e);
             
             template <typename T>
             inline T* AddComponent() {
@@ -97,6 +86,7 @@ namespace Weasel {
             }
 
             Transform Transform;
+            std::shared_ptr<Scene> Scene;
 
         private:
             std::array<Component*, MAX_COMPONENTS_PER_ENTITY> m_Components; // Find out how expensive reallocating ~500 bytes is.

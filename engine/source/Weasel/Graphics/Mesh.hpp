@@ -6,7 +6,7 @@
 namespace Weasel {
     class Mesh {
         public:
-            static std::shared_ptr<Mesh> Create(std::vector<Vertex> vertices, std::vector<Index> indices);
+            static std::shared_ptr<Mesh> Create(const std::vector<Vertex>& vertices, const std::vector<Index>& indices);
             Mesh(const std::vector<Vertex>& vertices, const std::vector<Index>& indices);
             ~Mesh();
             Mesh(const Mesh&) = delete;

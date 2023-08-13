@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Weasel/Graphics/RenderUtils.hpp"
+#include "Weasel/Graphics/Cameras.hpp"
+#include "Weasel/Graphics/Mesh.hpp"
+#include "Weasel/Graphics/Material.hpp"
 
 namespace Weasel {
     class Renderer {
@@ -10,7 +13,12 @@ namespace Weasel {
             ~Renderer();
             Renderer(const Renderer&) = delete;
             Renderer &operator=(const Renderer&) = delete;
+
+            void BeginScene(std::shared_ptr<Camera> camera);
+            void EndScene();
+            void DrawMesh(const std::shared_ptr<Mesh> mesh, const std::shared_ptr<Material> material);
         private:
+            std::shared_ptr<Camera> m_Camera;
 
     };
 }
