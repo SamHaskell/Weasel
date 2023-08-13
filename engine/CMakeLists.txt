@@ -65,7 +65,7 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Cameras.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Lights.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Renderer.hpp
-    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Model.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Mesh.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Material.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Shader.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Textures.hpp
@@ -79,6 +79,9 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/GameObject.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Scene.cpp
 
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/MeshInstance.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/VirtualCamera.cpp
+
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Events/Events.cpp
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/RenderUtils.cpp
@@ -86,7 +89,7 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Cameras.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Lights.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Renderer.cpp
-    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Model.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Mesh.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Material.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Shader.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Textures.cpp

@@ -4,10 +4,11 @@
 #include <iostream>
 
 #include "Weasel/Core/GameObject.hpp"
+#include "Weasel/Components/MeshInstance.hpp"
 
 #include "Weasel/Graphics/RenderTypes.hpp"
 #include "Weasel/Graphics/Shader.hpp"
-#include "Weasel/Graphics/Model.hpp"
+#include "Weasel/Graphics/Mesh.hpp"
 #include "Weasel/Graphics/Textures.hpp"
 #include "Weasel/Graphics/Buffers.hpp"
 #include "Weasel/Graphics/Cameras.hpp"
@@ -82,49 +83,6 @@ namespace Weasel
             0, 1, 2, 2, 3, 0  
         };
 
-        // set up the model
-        u32 VAO;
-        glGenVertexArrays(1, &VAO);
-        glBindVertexArray(VAO);
-
-        u32 VBO;    
-        glGenBuffers(1, &VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(
-            GL_ARRAY_BUFFER, 
-            sizeof(Vertex) * static_cast<u32>(cubeVertices.size()), 
-            cubeVertices.data(), 
-            GL_STATIC_DRAW
-        );
-
-        u32 IBO;
-        glGenBuffers(1, &IBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-        glBufferData(
-            GL_ELEMENT_ARRAY_BUFFER,
-            sizeof(Index) * static_cast<u32>(cubeIndices.size()),
-            cubeIndices.data(),
-            GL_STATIC_DRAW
-        );
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
-        glEnableVertexAttribArray(2);
-        glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoord));
-        glEnableVertexAttribArray(3);
-
-        u32 lightVAO;
-        glGenVertexArrays(1, &lightVAO);
-        glBindVertexArray(lightVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
-        glEnableVertexAttribArray(0);
-
         auto shaderRepository = ShaderRepository::Create();
         auto litShader = shaderRepository->Load(
             "lit", 
@@ -151,33 +109,16 @@ namespace Weasel
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
 
-        GameObject go;
-        SomeData* something = go.AddComponent<SomeData>();
-        SomeOtherData* somethingElse = go.AddComponent<SomeOtherData>();
-        LOG_INFO("%i", something->GetFive());
-        LOG_INFO("%i", somethingElse->GetSix());
-
-        SomeData* pointer = go.GetComponent<SomeData>();
-        LOG_INFO("%i", something->GetFive());
-
-        go.DestroyComponent(pointer);
-        if (pointer == nullptr) {
-            LOG_DEBUG("Component doesn't exist anymore!");
-        }
-
-        SomeData* maybe;
-        if (go.TryGetComponent<SomeData>(&maybe)) {
-            LOG_DEBUG("Wahey");
-        } else {
-            LOG_DEBUG("Boo");
-        }
-
-
+        GameObject mainObject;
+        auto cubeMesh = Mesh::Create(cubeVertices, cubeIndices);
+        auto cubeMaterial = Material::Create();
+        MeshInstance* mesh = mainObject.AddComponent<MeshInstance>();
+        mesh->SetMesh(cubeMesh);
+        mesh->SetMaterial(cubeMaterial);
 
         m_Running = true;
         while (m_Running)
         {            
-
             m_Window->Update();
 
             litShader->Bind();
@@ -187,18 +128,14 @@ namespace Weasel
             litShader->SetUniformVec3("u_LightPosition", mainLightPosition);
             litShader->SetUniformVec3("u_CameraPosition", mainCameraPosition);
 
-            glBindVertexArray(VAO);
-            glDrawElements(GL_TRIANGLES, static_cast<u32>(cubeIndices.size()), GL_UNSIGNED_INT, 0);
-            glBindVertexArray(0);
+            cubeMesh->Draw();
 
             lightShader->Bind();
             lightShader->SetUniformMat4("u_ModelToWorldSpace", glm::scale(glm::translate(glm::mat4(1.0f), mainLightPosition), glm::vec3(0.2f, 0.2f, 0.2f)));
             lightShader->SetUniformMat4("u_WorldToClipSpace", mainCamera.ProjectionMatrix * mainCamera.ViewMatrix);
             lightShader->SetUniformVec3("u_ObjectColor", glm::vec3(1.0f, 1.0f, 1.0f));
 
-            glBindVertexArray(lightVAO);
-            glDrawElements(GL_TRIANGLES, static_cast<u32>(cubeIndices.size()), GL_UNSIGNED_INT, 0);
-            glBindVertexArray(0);
+            cubeMesh->Draw();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
