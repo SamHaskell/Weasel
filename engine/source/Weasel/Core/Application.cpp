@@ -32,6 +32,7 @@ namespace Weasel
         m_Renderer = Renderer::Create();
 
         m_ActiveScene = Scene::Create();
+        m_ActiveScene->AspectRatio = m_Window->GetAspectRatio();
 
         // Manually stand up resources here while we develop the renderer ...
 
@@ -101,16 +102,22 @@ namespace Weasel
 
         auto editorCamera = m_ActiveScene->InstantiateGameObject();
         auto editorVCamera = editorCamera->AddComponent<VirtualCamera>();
-        editorVCamera->FOV = 60.0f;
-        editorVCamera->AspectRatio = m_Window->GetAspectRatio();
-        editorVCamera->NearClip = 0.1f;
-        editorVCamera->FarClip = 1000.0f;
         editorVCamera->MakeActive();
 
-        Camera mainCamera;
-        glm::vec3 mainCameraPosition = glm::vec3(6.0f, 6.0f, 6.0f);
-        mainCamera.SetPerspectiveProjection(60.0f, m_Window->GetAspectRatio(), 0.1f, 1000.0f);
-        mainCamera.SetViewTarget(mainCameraPosition, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        // Camera mainCamera;
+        // glm::vec3 mainCameraPosition = glm::vec3(6.0f, 6.0f, 6.0f);
+        // mainCamera.SetPerspectiveProjection(60.0f, m_Window->GetAspectRatio(), 0.1f, 1000.0f);
+        // mainCamera.SetViewTarget(mainCameraPosition, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        auto cubeMesh = Mesh::Create(cubeVertices, cubeIndices);
+        auto cubeMaterial = Material::Create();
+        
+        auto cube = m_ActiveScene->InstantiateGameObject();
+        auto cubeMeshInstance = cube->AddComponent<MeshInstance>();
+        cubeMeshInstance->SetMesh(cubeMesh);
+        cubeMeshInstance->SetMaterial(cubeMaterial);
+
+        auto model = Model::Load("../../testbed/assets/user/models/backpack/backpack.obj");
 
         DirectionalLight mainLight;
         glm::vec3 mainLightPosition = glm::vec3(-2.0f, 3.0f, 3.0f);
@@ -120,15 +127,6 @@ namespace Weasel
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_DEPTH_TEST);
-
-        GameObject mainObject;
-        auto cubeMesh = Mesh::Create(cubeVertices, cubeIndices);
-        auto cubeMaterial = Material::Create();
-        MeshInstance* mesh = mainObject.AddComponent<MeshInstance>();
-        mesh->SetMesh(cubeMesh);
-        mesh->SetMaterial(cubeMaterial);
-
-        auto model = Model::Load("../../testbed/assets/user/models/backpack/backpack.obj");
 
         m_Running = true;
         f64 dt = 0.0;
@@ -141,10 +139,10 @@ namespace Weasel
 
             litShader->Bind();
             litShader->SetUniformMat4("u_ModelToWorldSpace", glm::mat4(1.0f));
-            litShader->SetUniformMat4("u_WorldToClipSpace", mainCamera.ProjectionMatrix * mainCamera.ViewMatrix);
+            litShader->SetUniformMat4("u_WorldToClipSpace", m_ActiveScene->GetCameraViewProjectionMatrix());
             litShader->SetUniformVec3("u_LightColor", mainLight.Color);
             litShader->SetUniformVec3("u_LightPosition", mainLightPosition);
-            litShader->SetUniformVec3("u_CameraPosition", mainCameraPosition);
+            litShader->SetUniformVec3("u_CameraPosition", m_ActiveScene->GetCameraPosition());
 
             // cubeMesh->Draw();
             for (auto mesh : model->m_Meshes) {
@@ -153,7 +151,7 @@ namespace Weasel
 
             lightShader->Bind();
             lightShader->SetUniformMat4("u_ModelToWorldSpace", glm::scale(glm::translate(glm::mat4(1.0f), mainLightPosition), glm::vec3(0.2f, 0.2f, 0.2f)));
-            lightShader->SetUniformMat4("u_WorldToClipSpace", mainCamera.ProjectionMatrix * mainCamera.ViewMatrix);
+            lightShader->SetUniformMat4("u_WorldToClipSpace", m_ActiveScene->GetCameraViewProjectionMatrix());
             lightShader->SetUniformVec3("u_ObjectColor", glm::vec3(1.0f, 1.0f, 1.0f));
 
             cubeMesh->Draw();

@@ -13,7 +13,7 @@ namespace Weasel {
     }
 
     std::shared_ptr<GameObject> Scene::InstantiateGameObject() {
-        auto go = std::make_shared<GameObject>();
+        auto go = std::make_shared<GameObject>(this);
         m_GameObjects.push_back(go);
         return go;
     }
@@ -25,6 +25,14 @@ namespace Weasel {
     }
 
     void Scene::OnEvent(Event &e) {
+        switch (e.Tag) {
+            case EventTag::WindowSizeEvent:
+                AspectRatio = (f32)e.WindowSizeEvent.Width / (f32)e.WindowSizeEvent.Width;
+                break;
+            default:
+                break;
+        }
+
         for (auto& go : m_GameObjects) {
             go->OnEvent(e);
         }

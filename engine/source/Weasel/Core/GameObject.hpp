@@ -25,17 +25,25 @@ namespace Weasel {
         public:
             Transform() {}
             ~Transform() {}
+            
+            glm::mat4 WorldTransform();
+            glm::vec3 WorldPosition();
+            glm::vec3 WorldForward();
+
+            void SetLocalPosition(const glm::vec3& translation);
+            void SetLocalRotation(const glm::vec3& forward, const glm::vec3& right);
+            
         private:
+            bool m_RequireUpdate;
             std::shared_ptr<Transform> m_Parent;
             std::vector<std::shared_ptr<Transform>> m_Children;
             glm::mat4 m_LocalTransform;
             glm::mat4 m_WorldTransform;
-            bool m_RequireUpdate;
     };
 
     class GameObject {
         public:
-            GameObject();
+            GameObject(Scene* scene);
             ~GameObject();
             void Update(f64 dt);
             void OnEvent(Event& e);
@@ -86,7 +94,7 @@ namespace Weasel {
             }
 
             Transform Transform;
-            std::shared_ptr<Scene> Scene;
+            Scene* CurrentScene;
 
         private:
             std::array<Component*, MAX_COMPONENTS_PER_ENTITY> m_Components; // Find out how expensive reallocating ~500 bytes is.

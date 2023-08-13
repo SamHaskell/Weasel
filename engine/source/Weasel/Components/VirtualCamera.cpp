@@ -2,8 +2,18 @@
 
 namespace Weasel {
     VirtualCamera::VirtualCamera(GameObject* owner) : Component(owner) {
-        // m_Owner->Scene;
-        // m_Camera = Camera::CreatePerspective();
+        m_Camera = std::make_shared<Camera>();
+        m_Camera->SetPerspectiveProjection(
+            60.0f,
+            m_Owner->CurrentScene->AspectRatio,
+            0.1f,
+            1000.0f
+        );
+        m_Camera->SetViewDirection(
+            m_Owner->Transform.WorldPosition(),
+            m_Owner->Transform.WorldForward(),
+            glm::vec3(0.0f, 1.0f, 0.0f)
+        );
     }
 
     VirtualCamera::~VirtualCamera() {
@@ -11,11 +21,10 @@ namespace Weasel {
     }
 
     void VirtualCamera::MakeActive() {
-        m_Owner->Scene->SetMainCamera(m_Camera);
+        m_Owner->CurrentScene->SetMainCamera(m_Camera);
     }
 
     void VirtualCamera::Update(f64 dt) {
         LOG_INFO("Updating!");
-        m_Camera->SetPerspectiveProjection(FOV, AspectRatio, NearClip, FarClip);
     }
 }
