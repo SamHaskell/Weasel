@@ -11,7 +11,7 @@ namespace Weasel {
         );
         m_Camera->SetViewDirection(
             m_Owner->Transform.WorldPosition(),
-            m_Owner->Transform.WorldForward(),
+            m_Owner->Transform.Forward(),
             glm::vec3(0.0f, 1.0f, 0.0f)
         );
     }
@@ -25,6 +25,10 @@ namespace Weasel {
     }
 
     void VirtualCamera::Update(f64 dt) {
-        LOG_INFO("Updating!");
+        m_Camera->SetViewDirection(
+            m_Owner->Transform.WorldPosition(),
+            m_Owner->Transform.Forward(),
+            glm::vec3(0.0f, 1.0f, 0.0f)
+        );
     }
 }

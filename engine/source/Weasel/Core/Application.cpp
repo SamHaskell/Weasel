@@ -1,10 +1,10 @@
 #include "Weasel/Core/Application.hpp"
 
-#include "glad/glad.h"
-#include <iostream>
-
 #include "Weasel/Core/GameObject.hpp"
 #include "Weasel/Core/Model.hpp"
+
+#include "Weasel/Input/Input.hpp"
+
 #include "Weasel/Components/MeshInstance.hpp"
 #include "Weasel/Components/VirtualCamera.hpp"
 
@@ -28,6 +28,7 @@ namespace Weasel
         m_Window = Window::Create(spec);
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
         m_Window->SetClearColor(0.2, 0.2, 0.2, 1.0);
+        Input::SetActiveWindow(m_Window);
 
         m_Renderer = Renderer::Create();
 
@@ -103,11 +104,9 @@ namespace Weasel
         auto editorCamera = m_ActiveScene->InstantiateGameObject();
         auto editorVCamera = editorCamera->AddComponent<VirtualCamera>();
         editorVCamera->MakeActive();
-
-        // Camera mainCamera;
-        // glm::vec3 mainCameraPosition = glm::vec3(6.0f, 6.0f, 6.0f);
-        // mainCamera.SetPerspectiveProjection(60.0f, m_Window->GetAspectRatio(), 0.1f, 1000.0f);
-        // mainCamera.SetViewTarget(mainCameraPosition, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        editorCamera->Transform.SetLocalPosition(glm::vec3(6.0f, 6.0f, 6.0f));
+        auto fwd = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f));
+        editorCamera->Transform.SetLocalRotation(glm::quatLookAt(fwd, glm::vec3(0.0f, 1.0f, 0.0f)));
 
         auto cubeMesh = Mesh::Create(cubeVertices, cubeIndices);
         auto cubeMaterial = Material::Create();
@@ -134,6 +133,22 @@ namespace Weasel
         auto now = std::chrono::high_resolution_clock::now();
         while (m_Running)
         {            
+            if (Input::IsKeyDown(WEASEL_KEY_W)) {
+                editorCamera->Transform.Translate(editorCamera->Transform.Forward() * 2.0f * (f32)dt);
+            }
+
+            if (Input::IsKeyDown(WEASEL_KEY_S)) {
+                editorCamera->Transform.Translate(-editorCamera->Transform.Forward() * 2.0f * (f32)dt);
+            }
+
+            if (Input::IsKeyDown(WEASEL_KEY_A)) {
+                editorCamera->Transform.Translate(-editorCamera->Transform.Right() * 2.0f * (f32)dt);
+            }
+
+            if (Input::IsKeyDown(WEASEL_KEY_D)) {
+                editorCamera->Transform.Translate(editorCamera->Transform.Right() * 2.0f * (f32)dt);
+            }
+
             m_Window->Update(dt);
             m_ActiveScene->Update(dt);
 

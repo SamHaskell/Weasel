@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Weasel/Base/Base.hpp"
+#include "Weasel/Core/Transform.hpp"
 #include "Weasel/Events/Events.hpp"
 
 #include <stack>
@@ -19,26 +20,6 @@ namespace Weasel {
             virtual void Update(f64 dt) {}
         protected:
             GameObject* m_Owner;
-    };
-
-    class Transform {
-        public:
-            Transform() {}
-            ~Transform() {}
-            
-            glm::mat4 WorldTransform();
-            glm::vec3 WorldPosition();
-            glm::vec3 WorldForward();
-
-            void SetLocalPosition(const glm::vec3& translation);
-            void SetLocalRotation(const glm::vec3& forward, const glm::vec3& right);
-            
-        private:
-            bool m_RequireUpdate;
-            std::shared_ptr<Transform> m_Parent;
-            std::vector<std::shared_ptr<Transform>> m_Children;
-            glm::mat4 m_LocalTransform;
-            glm::mat4 m_WorldTransform;
     };
 
     class GameObject {

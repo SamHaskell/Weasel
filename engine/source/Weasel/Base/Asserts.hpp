@@ -42,6 +42,6 @@ inline void LogAssertionFailure(const char *expr, const char *file, i32 line, co
         #endif
 
 #else
-#define ASSERT(expr)
-#define DEBUGASSERT(expr)
+#define ASSERT(expr, msg)
+#define DEBUGASSERT(expr, msg)
 #endif

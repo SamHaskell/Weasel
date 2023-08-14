@@ -33,10 +33,10 @@ STATIC_ASSERT(sizeof(f32) == 4, "Expected f32 to be 4 byte(s).");
 STATIC_ASSERT(sizeof(f64) == 8, "Expected f64 to be 8 byte(s).");
 
 #ifdef __APPLE__
-    #define PLATFORM_APPLE 1
+    #define WEASEL_PLATFORM_APPLE 1
     #include <TargetConditionals.h>
     #if TARGET_OS_MAC
-        #define PLATFORM_MACOS 1
+        #define WEASEL_PLATFORM_MACOS 1
         // MacOS specific stuff
     #else
         #error "Weasel only supports MacOS Desktops at this time."
