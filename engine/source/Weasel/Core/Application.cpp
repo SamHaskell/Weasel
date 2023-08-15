@@ -121,6 +121,10 @@ namespace Weasel
 
         auto model = Model::Load("../../testbed/assets/user/models/backpack/backpack.obj");
 
+        auto diffuse = Texture2D::Create("../../testbed/assets/user/models/backpack/diffuse.jpg");
+        auto normal = Texture2D::Create("../../testbed/assets/user/models/backpack/normal.png");
+        auto specular = Texture2D::Create("../../testbed/assets/user/models/backpack/specular.jpg");
+
         DirectionalLight mainLight;
         glm::vec3 mainLightPosition = glm::vec3(-2.0f, 3.0f, 3.0f);
         mainLight.Color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -134,10 +138,14 @@ namespace Weasel
         f64 dt = 0.0;
         f64 elapsed = 0.0;
         auto now = std::chrono::high_resolution_clock::now();
+
+        m_ActiveScene->Awake();
+
         while (m_Running)
         {            
             m_Window->Update(dt);
             m_ActiveScene->Update(dt);
+            m_ActiveScene->LateUpdate(dt);
 
             litShader->Bind();
             litShader->SetUniformMat4("u_ModelToWorldSpace", glm::mat4(1.0f));
@@ -146,7 +154,14 @@ namespace Weasel
             litShader->SetUniformVec3("u_LightPosition", mainLightPosition);
             litShader->SetUniformVec3("u_CameraPosition", m_ActiveScene->GetCameraPosition());
 
+            litShader->SetSamplerSlot("u_DiffuseMap", 0);
+            litShader->SetSamplerSlot("u_NormalMap", 1);
+            litShader->SetSamplerSlot("u_SpecularMap", 2);
+
             // cubeMesh->Draw();
+            diffuse->Bind(0);
+            normal->Bind(1);
+            specular->Bind(2);
             for (auto mesh : model->m_Meshes) {
                 m_Renderer->DrawMesh(mesh, cubeMaterial);
             }
@@ -171,6 +186,8 @@ namespace Weasel
             dt = std::chrono::duration<f64, std::chrono::seconds::period>(next - now).count();
             elapsed += dt;
             now = next;
+
+            LOG_DEBUG("%f", dt);
         }
         return true;
     }

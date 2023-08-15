@@ -14,6 +14,7 @@ namespace Weasel {
             static Point2D MousePosition();
             static Point2D MouseDelta();
             inline static void DisableCursor() { glfwSetInputMode(s_NativeWindowHandle, GLFW_CURSOR, GLFW_CURSOR_DISABLED); }
+            inline static void EnableCursor() { glfwSetInputMode(s_NativeWindowHandle, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
         private:
             static GLFWwindow* s_NativeWindowHandle;
     };

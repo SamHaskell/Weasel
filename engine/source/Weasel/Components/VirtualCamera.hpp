@@ -13,7 +13,7 @@ namespace Weasel {
             VirtualCamera(GameObject* owner);
             ~VirtualCamera();
             void MakeActive();
-            virtual void Update(f64 dt) override;
+            virtual void LateUpdate(f64 dt) override;
 
             void SetFOV();
             void SetNearClip();

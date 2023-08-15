@@ -18,9 +18,21 @@ namespace Weasel {
         return go;
     }
 
+    void Scene::Awake() {
+        for (auto& go : m_GameObjects) {
+            go->Awake();
+        }
+    }
+
     void Scene::Update(f64 dt) {
         for (auto& go : m_GameObjects) {
             go->Update(dt);
+        }
+    }
+
+    void Scene::LateUpdate(f64 dt) {
+        for (auto& go: m_GameObjects) {
+            go->LateUpdate(dt);
         }
     }
 

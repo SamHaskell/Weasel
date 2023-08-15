@@ -23,8 +23,8 @@ namespace Weasel {
     void VirtualCamera::MakeActive() {
         m_Owner->CurrentScene->SetMainCamera(m_Camera);
     }
-
-    void VirtualCamera::Update(f64 dt) {
+    
+    void VirtualCamera::LateUpdate(f64 dt) {
         m_Camera->SetViewDirection(
             m_Owner->Transform.WorldPosition(),
             m_Owner->Transform.Forward(),

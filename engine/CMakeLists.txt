@@ -25,6 +25,7 @@ set(
     ${PROJECT_SOURCE_DIR}/vendor/glm
     ${PROJECT_SOURCE_DIR}/vendor/imgui
     ${PROJECT_SOURCE_DIR}/vendor/imgui/backends
+    ${PROJECT_SOURCE_DIR}/vendor/stb
 )
 
 set(
@@ -37,6 +38,7 @@ set(
     ${PROJECT_SOURCE_DIR}/vendor/imgui/imgui_widgets.cpp
     ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_glfw.cpp
     ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_opengl3.cpp
+    ${PROJECT_SOURCE_DIR}/vendor/stb/stb_image_impl.cpp
 )
 
 set(

@@ -17,7 +17,9 @@ namespace Weasel {
             Scene();
             ~Scene();
             std::shared_ptr<GameObject> InstantiateGameObject();
+            void Awake();
             void Update(f64 dt);
+            void LateUpdate(f64 dt);
             inline void SetMainCamera(std::shared_ptr<Camera> camera) { m_MainCamera = camera; }
             void OnEvent(Event &e);
 

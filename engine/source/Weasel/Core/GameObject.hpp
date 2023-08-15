@@ -19,6 +19,7 @@ namespace Weasel {
             virtual ~Component() {}
             virtual void Awake() {}
             virtual void Update(f64 dt) {}
+            virtual void LateUpdate(f64 dt) {}
         protected:
             GameObject* m_Owner;
     };
@@ -29,6 +30,7 @@ namespace Weasel {
             ~GameObject();
             void Awake();
             void Update(f64 dt);
+            void LateUpdate(f64 dt);
             void OnEvent(Event& e);
             
             template <typename T>

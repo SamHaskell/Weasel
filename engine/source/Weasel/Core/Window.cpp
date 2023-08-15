@@ -38,6 +38,7 @@ namespace Weasel
         glfwSetWindowUserPointer(m_WindowHandle, &m_WindowState);
 
         glfwMakeContextCurrent(m_WindowHandle);
+        glfwSwapInterval(0);
         gladLoadGL();
         glClearColor(0.1, 0.1, 0.1, 1.0);
 

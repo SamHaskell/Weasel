@@ -61,6 +61,9 @@ namespace Weasel {
         glUniformMatrix4fv(glGetUniformLocation(m_ShaderID, name), 1, GL_FALSE, &matrix[0][0]);
     }
 
+    void Shader::SetSamplerSlot(const char* name, const u32 slot) {
+        glUniform1i(glGetUniformLocation(m_ShaderID, name), slot);
+    }
 
     std::shared_ptr<ShaderRepository> ShaderRepository::Create() {
         return std::make_shared<ShaderRepository>();

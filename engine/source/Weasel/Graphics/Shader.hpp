@@ -14,6 +14,7 @@ namespace Weasel {
 
             void SetUniformVec3(const char* name, const glm::vec3& vector);
             void SetUniformMat4(const char* name, const glm::mat4& matrix);
+            void SetSamplerSlot(const char* name, const u32 slot);
         private:
             u32 m_ShaderID;
     };

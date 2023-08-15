@@ -28,6 +28,13 @@ namespace Weasel {
         }
     }
 
+    void GameObject::LateUpdate(f64 dt) {
+        for (auto& c : m_Components) {
+            if (!c) { continue; }
+            c->LateUpdate(dt);
+        }
+    }
+
     void GameObject::OnEvent(Event& e) {
         switch (e.Tag) {
             case EventTag::WindowSizeEvent:
