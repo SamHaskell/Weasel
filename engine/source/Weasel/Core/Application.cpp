@@ -107,8 +107,8 @@ namespace Weasel
         auto editorCameraController = editorCamera->AddComponent<EditorCameraController>();
 
         editorVCamera->MakeActive();
-        editorCamera->Transform.SetLocalPosition(glm::vec3(6.0f, 6.0f, 6.0f));
-        auto fwd = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f));
+        editorCamera->Transform.SetLocalPosition(glm::vec3(6.0f, 0.0f, 6.0f));
+        auto fwd = glm::normalize(glm::vec3(-1.0f, 0.0f, -1.0f));
         editorCamera->Transform.SetLocalRotation(glm::quatLookAt(fwd, glm::vec3(0.0f, 1.0f, 0.0f)));
 
         auto cubeMesh = Mesh::Create(cubeVertices, cubeIndices);

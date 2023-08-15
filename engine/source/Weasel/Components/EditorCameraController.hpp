@@ -12,8 +12,8 @@ namespace Weasel {
             void Awake() override;
             void Update(f64 dt) override;
             f32 MoveSpeed = 3.0f;
-            f32 HorizontalLookSensitivity = 90.0f;
-            f32 VerticalLookSensitivity = 90.0f;
+            f32 HorizontalLookSensitivity = 180.0f;
+            f32 VerticalLookSensitivity = 180.0f;
         private:
             f64 m_RotationX;
             f64 m_RotationY;

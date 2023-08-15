@@ -15,6 +15,7 @@ namespace Weasel {
 
             glm::mat4 LocalTransform();
             glm::quat LocalRotation();
+            glm::vec3 LocalEulerAngles();
             glm::vec3 LocalPosition();
             glm::vec3 LocalScale();
 

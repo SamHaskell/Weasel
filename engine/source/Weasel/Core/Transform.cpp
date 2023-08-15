@@ -39,6 +39,10 @@ namespace Weasel {
     glm::quat Transform::LocalRotation() {
         return m_LocalRotation;
     }
+
+    glm::vec3 Transform::LocalEulerAngles() {
+        return glm::eulerAngles(m_LocalRotation);
+    }
     
     glm::vec3 Transform::LocalPosition() {
         return m_LocalPosition;

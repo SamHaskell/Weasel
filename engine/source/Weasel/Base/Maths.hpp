@@ -33,9 +33,15 @@ namespace Weasel {
         inline f32 Clamp(f32 x, f32 min, f32 max) { return fmin(fmax(x, min), max); }
         inline i64 Clamp(i64 x, i64 min, i64 max) { return fmin(fmax(x, min), max); }
         inline i32 Clamp(i32 x, i32 min, i32 max) { return fmin(fmax(x, min), max); }
+
         inline Point2D Clamp(Point2D p, Point2D bl, Point2D tr) { 
             return { Maths::Clamp(p.X, bl.X, tr.X), Maths::Clamp(p.Y, bl.Y, tr.Y) };
         }
+
+        f64 Wrap(f64 x, f64 offset, f64 period);
+        f32 Wrap(f32 x, f32 offset, f32 period);
+        i64 Wrap(i64 x, i64 offset, i64 period);
+        i32 Wrap(i32 x, i32 offset, i32 period);
     }
 }
 
