@@ -7,6 +7,7 @@
 
 #include "Weasel/Components/MeshInstance.hpp"
 #include "Weasel/Components/VirtualCamera.hpp"
+#include "Weasel/Components/EditorCameraController.hpp"
 
 #include "Weasel/Graphics/RenderTypes.hpp"
 #include "Weasel/Graphics/Shader.hpp"
@@ -103,6 +104,8 @@ namespace Weasel
 
         auto editorCamera = m_ActiveScene->InstantiateGameObject();
         auto editorVCamera = editorCamera->AddComponent<VirtualCamera>();
+        auto editorCameraController = editorCamera->AddComponent<EditorCameraController>();
+
         editorVCamera->MakeActive();
         editorCamera->Transform.SetLocalPosition(glm::vec3(6.0f, 6.0f, 6.0f));
         auto fwd = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f));
@@ -133,24 +136,10 @@ namespace Weasel
         auto now = std::chrono::high_resolution_clock::now();
         while (m_Running)
         {            
-            if (Input::IsKeyDown(WEASEL_KEY_W)) {
-                editorCamera->Transform.Translate(editorCamera->Transform.Forward() * 2.0f * (f32)dt);
-            }
-
-            if (Input::IsKeyDown(WEASEL_KEY_S)) {
-                editorCamera->Transform.Translate(-editorCamera->Transform.Forward() * 2.0f * (f32)dt);
-            }
-
-            if (Input::IsKeyDown(WEASEL_KEY_A)) {
-                editorCamera->Transform.Translate(-editorCamera->Transform.Right() * 2.0f * (f32)dt);
-            }
-
-            if (Input::IsKeyDown(WEASEL_KEY_D)) {
-                editorCamera->Transform.Translate(editorCamera->Transform.Right() * 2.0f * (f32)dt);
-            }
-
             m_Window->Update(dt);
             m_ActiveScene->Update(dt);
+
+            LOG_DEBUG("%s", Input::MousePosition().ToString().c_str());
 
             litShader->Bind();
             litShader->SetUniformMat4("u_ModelToWorldSpace", glm::mat4(1.0f));

@@ -11,6 +11,8 @@ namespace Weasel {
         public:
             static void SetActiveWindow(const std::unique_ptr<Window>& window);
             static bool IsKeyDown(i32 key);
+            static Point2D MousePosition();
+            static Point2D MouseDelta();
         private:
             static GLFWwindow* s_NativeWindowHandle;
     };

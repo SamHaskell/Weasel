@@ -15,4 +15,10 @@ namespace Weasel {
         LOG_WARN("Polling for input without a bound Window.");
         return false;
     }
+
+    Point2D Input::MousePosition() {
+        Point2D point;
+        glfwGetCursorPos(s_NativeWindowHandle, &point.X, &point.Y);
+        return point;
+    }
 }

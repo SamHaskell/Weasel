@@ -52,6 +52,7 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Base/Defines.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Base/Logging.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Base/Asserts.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Base/Types.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Base/Base.hpp
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Entrypoint.hpp
@@ -67,6 +68,7 @@ set(
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/MeshInstance.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/VirtualCamera.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/EditorCameraController.hpp
     
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Events/Events.hpp
 
@@ -85,6 +87,8 @@ set(
 set(
     LOCAL_SOURCES
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Base/Logging.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Base/Types.cpp
+    
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Application.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Window.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Transform.cpp
@@ -96,6 +100,7 @@ set(
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/MeshInstance.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/VirtualCamera.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Components/EditorCameraController.cpp
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Events/Events.cpp
 
