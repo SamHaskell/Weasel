@@ -14,6 +14,7 @@ namespace Weasel {
             ~VirtualCamera();
             void MakeActive();
             virtual void LateUpdate(f64 dt) override;
+            virtual void OnWindowFramebufferResize(i32 width, i32 height) override;
 
             void SetFOV();
             void SetNearClip();

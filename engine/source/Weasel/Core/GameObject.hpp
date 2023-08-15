@@ -20,6 +20,7 @@ namespace Weasel {
             virtual void Awake() {}
             virtual void Update(f64 dt) {}
             virtual void LateUpdate(f64 dt) {}
+            virtual void OnWindowFramebufferResize(i32 width, i32 height) {}
         protected:
             GameObject* m_Owner;
     };

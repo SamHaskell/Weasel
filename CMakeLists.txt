@@ -15,3 +15,6 @@ add_subdirectory(engine)
 
 # Client exe compiled here
 add_subdirectory(testbed)
+
+# Editor app compiled here
+add_subdirectory(editor)

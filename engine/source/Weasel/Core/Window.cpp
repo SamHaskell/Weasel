@@ -55,12 +55,29 @@ namespace Weasel
         ImGui_ImplOpenGL3_Init("#version 410 core");
 
         glfwSetWindowCloseCallback(m_WindowHandle, [](GLFWwindow *window)
-                                   {
+        {
             auto state = (WindowState*)glfwGetWindowUserPointer(window);
             Event e = {EventTag::WindowCloseEvent};
             if (!state->EventCallback(e)) {
                 glfwSetWindowShouldClose(window, GLFW_FALSE);
-            } });
+            } 
+        });
+
+        glfwSetWindowSizeCallback(m_WindowHandle, [](GLFWwindow *window, i32 width, i32 height)
+        {
+            auto state = (WindowState*)glfwGetWindowUserPointer(window);
+            Event e = {EventTag::WindowSizeEvent};
+            e.WindowSizeEvent = {width, height};
+            state->EventCallback(e);
+        });
+
+        glfwSetFramebufferSizeCallback(m_WindowHandle, [](GLFWwindow *window, i32 width, i32 height)
+        {
+            auto state = (WindowState*)glfwGetWindowUserPointer(window);
+            Event e = {EventTag::WindowFramebufferSizeEvent};
+            e.WindowFramebufferSizeEvent = {width, height};
+            state->EventCallback(e);
+        });
     }
 
     void Window::Shutdown()

@@ -53,6 +53,10 @@ namespace Weasel {
 
     }
 
+    void Shader::SetUniformFloat(const char* name, const f32& value) {
+        glUniform1f(glGetUniformLocation(m_ShaderID, name), value);
+    }
+
     void Shader::SetUniformVec3(const char* name, const glm::vec3& vector) {
         glUniform3fv(glGetUniformLocation(m_ShaderID, name), 1, &vector[0]);
     }

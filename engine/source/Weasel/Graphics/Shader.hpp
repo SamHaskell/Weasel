@@ -12,6 +12,7 @@ namespace Weasel {
             Shader &operator=(const Shader&) = delete;
             inline void Bind() { glUseProgram(m_ShaderID); }
 
+            void SetUniformFloat(const char* name, const f32& value);
             void SetUniformVec3(const char* name, const glm::vec3& vector);
             void SetUniformMat4(const char* name, const glm::mat4& matrix);
             void SetSamplerSlot(const char* name, const u32 slot);

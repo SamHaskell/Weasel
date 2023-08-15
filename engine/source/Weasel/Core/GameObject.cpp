@@ -36,13 +36,15 @@ namespace Weasel {
     }
 
     void GameObject::OnEvent(Event& e) {
-        switch (e.Tag) {
-            case EventTag::WindowSizeEvent:
-                // check to see if component implements a window size event
-                break;
-            default:
-                break;
+        for (auto& c : m_Components) {
+            if (!c) { continue; }
+            switch (e.Tag) {
+                case EventTag::WindowFramebufferSizeEvent:
+                    c->OnWindowFramebufferResize(e.WindowFramebufferSizeEvent.Width, e.WindowFramebufferSizeEvent.Height);
+                    break;
+                default:
+                    break;
+            }
         }
-        return;
     }
 }

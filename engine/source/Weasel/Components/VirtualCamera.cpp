@@ -31,4 +31,9 @@ namespace Weasel {
             glm::vec3(0.0f, 1.0f, 0.0f)
         );
     }
+
+    void VirtualCamera::OnWindowFramebufferResize(i32 width, i32 height) {
+        LOG_DEBUG("On resize!");
+        m_Camera->SetPerspectiveProjection(m_FOV, (f32)width/(f32)height, m_NearClip, m_FarClip);
+    }
 }

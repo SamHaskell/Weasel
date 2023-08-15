@@ -1,15 +1,13 @@
 #include "Weasel/Core/Application.hpp"
 #include "Weasel/Core/Entrypoint.hpp"
 
-#include <iostream>
-
-class Testbed : public Weasel::Application {
+class Editor : public Weasel::Application {
     public:
-        Testbed() {}
-        ~Testbed() {}
+        Editor() {}
+        ~Editor() {}
     private:
 };
 
 Weasel::Application *Weasel::CreateApplication() {
-    return new Testbed();
+    return new Editor();
 }
