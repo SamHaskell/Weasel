@@ -139,8 +139,6 @@ namespace Weasel
             m_Window->Update(dt);
             m_ActiveScene->Update(dt);
 
-            LOG_DEBUG("%s", Input::MousePosition().ToString().c_str());
-
             litShader->Bind();
             litShader->SetUniformMat4("u_ModelToWorldSpace", glm::mat4(1.0f));
             litShader->SetUniformMat4("u_WorldToClipSpace", m_ActiveScene->GetCameraViewProjectionMatrix());

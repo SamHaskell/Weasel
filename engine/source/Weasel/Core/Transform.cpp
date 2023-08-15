@@ -79,4 +79,9 @@ namespace Weasel {
         m_Valid = false;
         m_LocalPosition += displacement;
     }  
+
+    void Transform::Rotate(const glm::vec3& axis, f32 angle) {
+        m_Valid = false;
+        m_LocalRotation = glm::angleAxis(glm::radians(angle), axis) * m_LocalRotation;
+    }
 }

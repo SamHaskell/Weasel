@@ -3,7 +3,7 @@
 #include "Weasel/Base/Defines.hpp"
 #include "Weasel/Base/Logging.hpp"
 #include "Weasel/Base/Asserts.hpp"
-#include "Weasel/Base/Types.hpp"
+#include "Weasel/Base/Maths.hpp"
 
 #define GLM_FORCE_RADIANS
 #include "glm/glm.hpp"

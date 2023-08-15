@@ -27,6 +27,7 @@ namespace Weasel {
             void SetLocalScale(const glm::vec3& scale);            
 
             void Translate(const glm::vec3& displacement);
+            void Rotate(const glm::vec3& axis, f32 angle);
         private:
             bool m_Valid;
             std::shared_ptr<Transform> m_Parent;

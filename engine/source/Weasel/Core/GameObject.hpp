@@ -17,6 +17,7 @@ namespace Weasel {
         public:
             Component(GameObject* owner) { m_Owner = owner; }
             virtual ~Component() {}
+            virtual void Awake() {}
             virtual void Update(f64 dt) {}
         protected:
             GameObject* m_Owner;
@@ -26,6 +27,7 @@ namespace Weasel {
         public:
             GameObject(Scene* scene);
             ~GameObject();
+            void Awake();
             void Update(f64 dt);
             void OnEvent(Event& e);
             

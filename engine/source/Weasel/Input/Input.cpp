@@ -21,4 +21,8 @@ namespace Weasel {
         glfwGetCursorPos(s_NativeWindowHandle, &point.X, &point.Y);
         return point;
     }
+
+    Point2D Input::MouseDelta() {
+
+    }
 }

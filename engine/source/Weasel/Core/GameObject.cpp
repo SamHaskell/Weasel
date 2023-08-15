@@ -14,6 +14,13 @@ namespace Weasel {
 
     }
 
+    void GameObject::Awake() {
+        for (auto& c : m_Components) {
+            if (!c) { continue; }
+            c->Awake();
+        }
+    }
+
     void GameObject::Update(f64 dt) {
         for (auto& c : m_Components) {
             if (!c) { continue; }

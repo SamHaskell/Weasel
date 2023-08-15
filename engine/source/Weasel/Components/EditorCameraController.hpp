@@ -9,11 +9,15 @@ namespace Weasel {
         public:
             EditorCameraController(GameObject* owner);
             ~EditorCameraController() override;
+            void Awake() override;
             void Update(f64 dt) override;
             f32 MoveSpeed = 3.0f;
             f32 HorizontalLookSensitivity = 90.0f;
             f32 VerticalLookSensitivity = 90.0f;
         private:
+            f64 m_RotationX;
+            f64 m_RotationY;
+            Point2D m_PreviousMousePosition;
 
     };
 }
