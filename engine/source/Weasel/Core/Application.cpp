@@ -67,7 +67,6 @@ namespace Weasel
             for (auto layer : m_AppStack.Layers) { layer->ImGuiRender(); }
             for (auto overlay : m_AppStack.Overlays) { overlay->ImGuiRender(); }
 
-            ImGui::Button("Hello!", {100, 100});
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
