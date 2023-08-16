@@ -42,18 +42,6 @@ namespace Weasel
         gladLoadGL();
         glClearColor(0.1, 0.1, 0.1, 1.0);
 
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO &io = ImGui::GetIO();
-        (void)io;
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-
-        ImGui::StyleColorsDark();
-
-        ImGui_ImplGlfw_InitForOpenGL(m_WindowHandle, true);
-        ImGui_ImplOpenGL3_Init("#version 410 core");
-
         glfwSetWindowCloseCallback(m_WindowHandle, [](GLFWwindow *window)
         {
             auto state = (WindowState*)glfwGetWindowUserPointer(window);
@@ -82,10 +70,6 @@ namespace Weasel
 
     void Window::Shutdown()
     {
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
-
         glfwDestroyWindow(m_WindowHandle);
         glfwTerminate();
     }

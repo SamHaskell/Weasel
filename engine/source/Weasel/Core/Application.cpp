@@ -32,6 +32,18 @@ namespace Weasel
 
     bool Application::Run()
     {
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO &io = ImGui::GetIO();
+        (void)io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+        // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+        // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+        ImGui::StyleColorsDark();
+        ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)m_Window->GetNativeHandle(), true);
+        ImGui_ImplOpenGL3_Init("#version 410 core");
+
         glCullFace(GL_BACK);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -78,6 +90,10 @@ namespace Weasel
             now = next;
         }
         return true;
+
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
     }
 
     bool Application::OnEvent(Event &e)
