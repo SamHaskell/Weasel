@@ -1,13 +1,14 @@
 #include "Weasel/Core/Application.hpp"
 #include "Weasel/Core/Entrypoint.hpp"
 
-#include <iostream>
+#include "TestLayer.hpp"
 
 class Testbed : public Weasel::Application {
     public:
-        Testbed() {}
+        Testbed() {
+            m_AppStack.AddLayer(new TestLayer());
+        }
         ~Testbed() {}
-    private:
 };
 
 Weasel::Application *Weasel::CreateApplication() {

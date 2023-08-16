@@ -60,6 +60,8 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Entrypoint.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Application.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Window.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/AppStack.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Layer.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Transform.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/GameObject.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Scene.hpp
@@ -93,6 +95,7 @@ set(
     
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Application.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Window.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/AppStack.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Transform.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/GameObject.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Core/Scene.cpp

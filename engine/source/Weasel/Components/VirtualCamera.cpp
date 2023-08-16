@@ -3,12 +3,6 @@
 namespace Weasel {
     VirtualCamera::VirtualCamera(GameObject* owner) : Component(owner) {
         m_Camera = std::make_shared<Camera>();
-        m_Camera->SetPerspectiveProjection(
-            60.0f,
-            m_Owner->CurrentScene->AspectRatio,
-            0.1f,
-            1000.0f
-        );
         m_Camera->SetViewDirection(
             m_Owner->Transform.WorldPosition(),
             m_Owner->Transform.Forward(),
@@ -33,7 +27,6 @@ namespace Weasel {
     }
 
     void VirtualCamera::OnWindowFramebufferResize(i32 width, i32 height) {
-        LOG_DEBUG("On resize!");
         m_Camera->SetPerspectiveProjection(m_FOV, (f32)width/(f32)height, m_NearClip, m_FarClip);
     }
 }

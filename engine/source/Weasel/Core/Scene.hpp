@@ -23,23 +23,14 @@ namespace Weasel {
             inline void SetMainCamera(std::shared_ptr<Camera> camera) { m_MainCamera = camera; }
             void OnEvent(Event &e);
 
-
             // TEMPORARY ... NEED TO COME UP WITH A NICE WAY TO HANDLE CAMERAS AND CAMERA DATA
-            
-            f32 AspectRatio;
-            inline glm::mat4 GetCameraViewProjectionMatrix() {
-                return m_MainCamera->ProjectionMatrix * m_MainCamera->ViewMatrix;
-            }
 
-            inline glm::vec3 GetCameraPosition() {
-                return m_MainCamera->Position;
-            }
-
-            inline glm::vec3 GetCameraForward() {
-                return m_MainCamera->Forward;
-            }
+            inline glm::mat4 GetCameraViewProjectionMatrix() { return m_MainCamera->ViewProjectionMatrix(); }
+            inline glm::vec3 GetCameraPosition() { return m_MainCamera->Position(); }
+            inline glm::vec3 GetCameraForward() { return m_MainCamera->Forward(); }
 
         private:
+            f32 AspectRatio;
             std::shared_ptr<Camera> m_MainCamera;
             std::vector<std::shared_ptr<GameObject>> m_GameObjects;
     };

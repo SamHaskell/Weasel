@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Weasel/Base/Base.hpp"
 #include "Weasel/Graphics/Mesh.hpp"
 #include "Weasel/Graphics/Material.hpp"
 

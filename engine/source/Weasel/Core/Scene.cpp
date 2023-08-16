@@ -31,7 +31,7 @@ namespace Weasel {
     }
 
     void Scene::LateUpdate(f64 dt) {
-        for (auto& go: m_GameObjects) {
+        for (auto& go : m_GameObjects) {
             go->LateUpdate(dt);
         }
     }
