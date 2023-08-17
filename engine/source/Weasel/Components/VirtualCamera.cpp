@@ -26,7 +26,8 @@ namespace Weasel {
         );
     }
 
-    void VirtualCamera::OnWindowFramebufferResize(i32 width, i32 height) {
-        m_Camera->SetPerspectiveProjection(m_FOV, (f32)width/(f32)height, m_NearClip, m_FarClip);
+    void VirtualCamera::OnViewportResize(Rect2D viewport) {
+        f32 aspect = (viewport.Right - viewport.Left) / (viewport.Top - viewport.Bottom);
+        m_Camera->SetPerspectiveProjection(m_FOV, aspect, m_NearClip, m_FarClip);
     }
 }

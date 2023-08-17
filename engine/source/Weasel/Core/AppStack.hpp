@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Weasel/Base/Base.hpp"
-#include "Weasel/Core/Layer.hpp"
 
 #include <algorithm>
 
 namespace Weasel {
+    class Layer;
+
     class AppStack {
         public:
             AppStack() {}

@@ -3,15 +3,22 @@
 
 #include "EditorLayer.hpp"
 
-class Editor : public Weasel::Application {
-    public:
-        Editor() {
-            m_AppStack.AddOverlay(new EditorLayer());
-        }
-        ~Editor() {}
-    private:
-};
+namespace Weasel {
+    class Editor : public Application {
+        public:
+            Editor(AppConfig config) : Application(config) {
+                m_AppStack.AddOverlay(new EditorLayer(m_AppState));
+            }
+            ~Editor() {}
+        private:
+    };
 
-Weasel::Application *Weasel::CreateApplication() {
-    return new Editor();
+    Application *CreateApplication() {
+        AppConfig config = {
+            .Name = "Weasel Editor",
+            .InitWidth = 1280,
+            .InitHeight = 720
+        };
+        return new Editor(config);
+    }
 }

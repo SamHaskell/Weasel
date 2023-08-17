@@ -10,6 +10,11 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtx/quaternion.hpp"
 
+#include "imgui.h"
+#include "imgui_internal.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
+
 #include <memory>
 #include <vector>
 #include <unordered_map>

@@ -21,7 +21,7 @@ namespace Weasel {
 
     }
 
-    void Renderer::DrawMesh(const std::shared_ptr<Mesh> mesh, const std::shared_ptr<Material> material) {
+    void Renderer::DrawMesh(const std::shared_ptr<Mesh> mesh) {
         mesh->Draw();
     }
 }

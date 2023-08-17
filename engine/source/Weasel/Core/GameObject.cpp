@@ -39,12 +39,16 @@ namespace Weasel {
         for (auto& c : m_Components) {
             if (!c) { continue; }
             switch (e.Tag) {
-                case EventTag::WindowFramebufferSizeEvent:
-                    c->OnWindowFramebufferResize(e.WindowFramebufferSizeEvent.Width, e.WindowFramebufferSizeEvent.Height);
-                    break;
                 default:
                     break;
             }
+        }
+    }
+
+    void GameObject::OnViewportResize(Rect2D viewport) {
+        for (auto& c : m_Components) {
+            if (!c) { continue; }
+            c->OnViewportResize(viewport);
         }
     }
 }

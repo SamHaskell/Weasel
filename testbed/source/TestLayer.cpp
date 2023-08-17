@@ -1,7 +1,10 @@
 #include "TestLayer.hpp"
 
-TestLayer::TestLayer() {
+TestLayer::TestLayer(Weasel::AppState state) : Layer(state) {
     m_ActiveScene = Weasel::Scene::Create();
+    m_ActiveScene->SetViewport(Weasel::Rect2D(0, state.WindowWidth, 0, state.WindowHeight));
+    m_FramebufferSpec = { .Width = state.WindowFramebufferWidth, .Height = state.WindowFramebufferHeight };
+    m_Framebuffer = Weasel::Framebuffer::Create(m_FramebufferSpec);
 
     std::vector<Vertex> cubeVertices {
         {.Position = {-1.0f, -1.0f, +1.0f}, .Normal = {+0.0f, +0.0f, +1.0f}}, //FRONT
@@ -133,6 +136,7 @@ void TestLayer::Render(const std::unique_ptr<Weasel::Renderer>& renderer) {
     auto lightShader = m_ShaderRepository->Get("light");
 
     litShader->Bind();
+    auto temp = m_ActiveScene->GetCameraPosition();
     litShader->SetUniformMat4("u_WorldToClipSpace", m_ActiveScene->GetCameraViewProjectionMatrix());
     litShader->SetUniformVec3("u_CameraPosition", m_ActiveScene->GetCameraPosition());
 
@@ -185,7 +189,7 @@ void TestLayer::Render(const std::unique_ptr<Weasel::Renderer>& renderer) {
         m_Cube->Transform.SetLocalPosition(glm::vec3(-10.0f + 5.0f * i, 0.0f, 0.0f));
         litShader->SetUniformMat4("u_ModelToWorldSpace", m_Cube->Transform.WorldTransform());
         for (auto mesh : m_BackpackModel->m_Meshes) {
-            renderer->DrawMesh(mesh, m_Cube->GetComponent<Weasel::MeshInstance>()->GetMaterial());
+            renderer->DrawMesh(mesh);
         }
     }
 
@@ -198,11 +202,23 @@ void TestLayer::Render(const std::unique_ptr<Weasel::Renderer>& renderer) {
         m_Cube->GetComponent<Weasel::MeshInstance>()->GetMesh()->Draw(); }
 }
 
-void TestLayer::ImGuiRender() {
+void TestLayer::RenderGUI() {
 
 }
 
 bool TestLayer::OnEvent(Weasel::Event& e) {
+    switch (e.Tag) {
+        case Weasel::EventTag::WindowFramebufferSizeEvent:
+            m_FramebufferSpec.Width = e.WindowFramebufferSizeEvent.Width;
+            m_FramebufferSpec.Height = e.WindowFramebufferSizeEvent.Height;
+            m_Framebuffer = Weasel::Framebuffer::Create(m_FramebufferSpec);
+            break;
+        case Weasel::EventTag::WindowSizeEvent:
+            m_ActiveScene->SetViewport(Weasel::Rect2D(0, e.WindowSizeEvent.Width, 0, e.WindowSizeEvent.Height));
+            break;
+        default:
+            break;
+    }
     m_ActiveScene->OnEvent(e);
     return false;
 }

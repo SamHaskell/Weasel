@@ -1,4 +1,5 @@
 #include "Weasel/Core/AppStack.hpp"
+#include "Weasel/Core/Layer.hpp"
 
 namespace Weasel {
     AppStack::~AppStack() {

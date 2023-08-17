@@ -21,6 +21,7 @@ namespace Weasel {
             void Update(f64 dt);
             void LateUpdate(f64 dt);
             inline void SetMainCamera(std::shared_ptr<Camera> camera) { m_MainCamera = camera; }
+            void SetViewport(Rect2D viewport);
             void OnEvent(Event &e);
 
             // TEMPORARY ... NEED TO COME UP WITH A NICE WAY TO HANDLE CAMERAS AND CAMERA DATA

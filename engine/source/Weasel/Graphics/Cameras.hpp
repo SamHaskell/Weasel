@@ -19,12 +19,11 @@ namespace Weasel {
             void SetViewDirection(glm::vec3 position, glm::vec3 forward, glm::vec3 up);
             void SetViewTarget(glm::vec3 position, glm::vec3 target, glm::vec3 up);
         private:
-            bool m_Dirty;
             glm::mat4 m_ProjectionMatrix {1.0f};
             glm::mat4 m_ViewMatrix {1.0f};
-            glm::vec3 m_Position;
-            glm::vec3 m_Forward;
-            glm::vec3 m_Up;
+            glm::vec3 m_Position {0.0f, 0.0f, 0.0f};
+            glm::vec3 m_Forward {0.0f, 0.0f, -1.0f};
+            glm::vec3 m_Up {0.0f, 1.0f, 0.0f};
         
     };
 }

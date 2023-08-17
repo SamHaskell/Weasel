@@ -5,12 +5,18 @@
 
 class Testbed : public Weasel::Application {
     public:
-        Testbed() {
-            m_AppStack.AddLayer(new TestLayer());
+        Testbed(Weasel::AppConfig config) : Weasel::Application(config) {
+            m_AppStack.AddLayer(new TestLayer(m_AppState));
         }
         ~Testbed() {}
 };
 
 Weasel::Application *Weasel::CreateApplication() {
-    return new Testbed();
+    Weasel::AppConfig config = {
+        .Name = "Weasel Runtime Test",
+        .InitWidth = 1280,
+        .InitHeight = 720
+    };
+
+    return new Testbed(config);
 }

@@ -65,27 +65,27 @@ namespace Weasel {
     }
 
     void Transform::SetLocalRotation(const glm::quat& rotation) {
-        m_Valid = false;
+        Invalidate();
         m_LocalRotation = rotation;
     }
 
     void Transform::SetLocalPosition(const glm::vec3& position) {
-        m_Valid = false;
+        Invalidate();
         m_LocalPosition = position;
     }
 
     void Transform::SetLocalScale(const glm::vec3& scale) {
-        m_Valid = false;
+        Invalidate();
         m_LocalScale = scale;
     }  
 
     void Transform::Translate(const glm::vec3& displacement) {
-        m_Valid = false;
+        Invalidate();
         m_LocalPosition += displacement;
     }  
 
     void Transform::Rotate(const glm::vec3& axis, f32 angle) {
-        m_Valid = false;
+        Invalidate();
         m_LocalRotation = glm::angleAxis(glm::radians(angle), axis) * m_LocalRotation;
     }
 }

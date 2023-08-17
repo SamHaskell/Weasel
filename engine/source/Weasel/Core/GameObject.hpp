@@ -20,7 +20,7 @@ namespace Weasel {
             virtual void Awake() {}
             virtual void Update(f64 dt) {}
             virtual void LateUpdate(f64 dt) {}
-            virtual void OnWindowFramebufferResize(i32 width, i32 height) {}
+            virtual void OnViewportResize(Rect2D viewport) {}
         protected:
             GameObject* m_Owner;
     };
@@ -33,6 +33,7 @@ namespace Weasel {
             void Update(f64 dt);
             void LateUpdate(f64 dt);
             void OnEvent(Event& e);
+            void OnViewportResize(Rect2D viewport);
             
             template <typename T>
             inline T* AddComponent() {

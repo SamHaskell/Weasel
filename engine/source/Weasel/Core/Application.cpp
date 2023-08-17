@@ -1,31 +1,25 @@
 #include "Weasel/Core/Application.hpp"
-
-#include "Weasel/Core/GameObject.hpp"
-#include "Weasel/Core/Model.hpp"
-
+#include "Weasel/Core/Layer.hpp"
 #include "Weasel/Input/Input.hpp"
-
-#include "Weasel/Components/MeshInstance.hpp"
-#include "Weasel/Components/VirtualCamera.hpp"
-#include "Weasel/Components/EditorCameraController.hpp"
-
-#include "Weasel/Graphics/RenderTypes.hpp"
-#include "Weasel/Graphics/Shader.hpp"
-#include "Weasel/Graphics/Mesh.hpp"
-#include "Weasel/Graphics/Textures.hpp"
-#include "Weasel/Graphics/Buffers.hpp"
-#include "Weasel/Graphics/Cameras.hpp"
-#include "Weasel/Graphics/Lights.hpp"
 
 namespace Weasel
 {
-    Application::Application() {
-        WindowSpec spec = {};
-        m_Window = Window::Create(spec);
+    Application::Application(AppConfig config) {
+        WindowConfig wConfig = {.Title = config.Name.c_str(), .Width = (i32)config.InitWidth, .Height = (i32)config.InitHeight};
+        m_Window = Window::Create(wConfig);
         m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
         m_Window->SetClearColor(0.2, 0.2, 0.2, 1.0);
         Input::SetActiveWindow(m_Window);
+        
         m_Renderer = Renderer::Create();
+
+        m_AppState = {
+            .Name = config.Name,
+            .WindowWidth = config.InitWidth,
+            .WindowHeight = config.InitHeight,
+            .WindowFramebufferWidth = m_Window->GetFramebufferWidth(),
+            .WindowFramebufferHeight = m_Window->GetFramebufferHeight()
+        };
     }
 
     Application::~Application() {}
@@ -38,8 +32,8 @@ namespace Weasel
         (void)io;
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-        // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-        // io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
         ImGui::StyleColorsDark();
         ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)m_Window->GetNativeHandle(), true);
         ImGui_ImplOpenGL3_Init("#version 410 core");
@@ -57,10 +51,6 @@ namespace Weasel
         while (m_Running)
         {            
             m_Window->Update(dt);
-            
-            ////////////////////////////////////////////////////////
-
-            // GAME LOOP
 
             for (auto layer : m_AppStack.Layers) { layer->Update(dt); }
             for (auto layer : m_AppStack.Layers) { layer->LateUpdate(dt); }
@@ -76,11 +66,20 @@ namespace Weasel
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            for (auto layer : m_AppStack.Layers) { layer->ImGuiRender(); }
-            for (auto overlay : m_AppStack.Overlays) { overlay->ImGuiRender(); }
+            for (auto layer : m_AppStack.Layers) { layer->RenderGUI(); }
+            for (auto overlay : m_AppStack.Overlays) { overlay->RenderGUI(); }
+
+            io.DisplaySize = ImVec2((i32)m_AppState.WindowWidth, (i32)m_AppState.WindowHeight);
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+                GLFWwindow* backup_context = (GLFWwindow*)m_Window->GetNativeHandle();
+                ImGui::UpdatePlatformWindows();
+                ImGui::RenderPlatformWindowsDefault();
+                glfwMakeContextCurrent(backup_context);
+            }
 
             // TIMING
 

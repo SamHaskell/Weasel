@@ -2,14 +2,14 @@
 
 namespace Weasel
 {
-    std::unique_ptr<Window> Window::Create(const WindowSpec &spec)
+    std::unique_ptr<Window> Window::Create(const WindowConfig &config)
     {
-        return std::make_unique<Window>(spec);
+        return std::make_unique<Window>(config);
     }
 
-    Window::Window(const WindowSpec &spec)
+    Window::Window(const WindowConfig &config)
     {
-        Init(spec);
+        Init(config);
     }
 
     Window::~Window()
@@ -17,7 +17,7 @@ namespace Weasel
         Shutdown();
     }
 
-    void Window::Init(const WindowSpec &spec)
+    void Window::Init(const WindowConfig &config)
     {
         glfwInit();
 
@@ -28,11 +28,11 @@ namespace Weasel
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
 
-        m_WindowHandle = glfwCreateWindow(spec.Width, spec.Height, spec.Title, NULL, NULL);
+        m_WindowHandle = glfwCreateWindow(config.Width, config.Height, config.Title, NULL, NULL);
 
-        m_WindowState.Title = spec.Title;
-        m_WindowState.Width = spec.Width;
-        m_WindowState.Height = spec.Height;
+        m_WindowState.Title = config.Title;
+        m_WindowState.Width = config.Width;
+        m_WindowState.Height = config.Height;
         glfwGetFramebufferSize(m_WindowHandle, &m_WindowState.FramebufferWidth, &m_WindowState.FramebufferHeight);
 
         glfwSetWindowUserPointer(m_WindowHandle, &m_WindowState);

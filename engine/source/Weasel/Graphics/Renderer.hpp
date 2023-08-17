@@ -16,7 +16,7 @@ namespace Weasel {
 
             void BeginScene(std::shared_ptr<Camera> camera);
             void EndScene();
-            void DrawMesh(const std::shared_ptr<Mesh> mesh, const std::shared_ptr<Material> material);
+            void DrawMesh(const std::shared_ptr<Mesh> mesh);
         private:
             std::shared_ptr<Camera> m_Camera;
 

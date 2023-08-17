@@ -79,6 +79,7 @@ set(
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/RenderTypes.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/RenderUtils.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Buffers.hpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Framebuffer.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Cameras.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Lights.hpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Renderer.hpp
@@ -111,6 +112,7 @@ set(
 
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/RenderUtils.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Buffers.cpp
+    ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Framebuffer.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Cameras.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Lights.cpp
     ${PROJECT_SOURCE_DIR}/source/${PROJECT_NAME}/Graphics/Renderer.cpp

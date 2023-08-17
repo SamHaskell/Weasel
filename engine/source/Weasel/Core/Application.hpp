@@ -7,22 +7,30 @@
 #include "Weasel/Core/Scene.hpp"
 #include "Weasel/Graphics/Renderer.hpp"
 
-#include "imgui.h"
-#include "imgui_internal.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
+namespace Weasel {
+    struct AppConfig {
+        std::string Name;
+        u32 InitWidth;
+        u32 InitHeight;
+    };
 
-namespace Weasel
-{
-    class Application
-    {
+    struct AppState {
+        std::string Name;
+        u32 WindowWidth;
+        u32 WindowHeight;
+        u32 WindowFramebufferWidth;
+        u32 WindowFramebufferHeight;
+    };
+
+    class Application {
     public:
-        Application();
+        Application(AppConfig config);
         virtual ~Application();
         bool Run();
         bool OnEvent(Event &e);
     protected:
         AppStack m_AppStack;
+        AppState m_AppState;
     private:
         bool m_Running;
         std::unique_ptr<Window> m_Window;
