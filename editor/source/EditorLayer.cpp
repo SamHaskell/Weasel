@@ -181,6 +181,7 @@ namespace Weasel {
                 if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
                     ImGui::DockSpace(ImGui::GetID("My Dockspace"), ImVec2(0.0f, 0.0f), dockspace_flags); }
 
+                ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
                 ImGui::Begin("Viewport");
 
                 {
@@ -202,6 +203,7 @@ namespace Weasel {
                 }
                 
                 ImGui::End();
+                ImGui::PopStyleVar();
 
                 ImGui::Begin("Settings");
                 
