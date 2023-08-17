@@ -24,7 +24,6 @@ namespace Weasel {
     }
 
     void Camera::SetPerspectiveProjection(f32 fovy, f32 aspect, f32 near, f32 far) {
-        LOG_DEBUG("Setting!");
         m_ProjectionMatrix = glm::perspective(glm::radians(fovy), aspect, near, far);
     }
 
